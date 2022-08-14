@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { Component } from 'react';
+import BoardView from './components/BoardView.jsx';
+// This component expects the props:
+// cars = the game logic object
+class App extends Component
+{
+  constructor(props)
+    {
+      super(props);
+      this.state = { counter: 0 };
+      this.onBoardUpdate = this.onBoardUpdate.bind(this);
+      props.cars.setRedrawCallback(this.onBoardUpdate);
+    }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  onBoardUpdate(counter) {
+    this.setState({counter: counter});
+  } 
+
+  render()
+  {
+    return ( <div>
+      <BoardView cars={this.props.cars}/>
+    </div> );
+  }
 }
-
 export default App;
